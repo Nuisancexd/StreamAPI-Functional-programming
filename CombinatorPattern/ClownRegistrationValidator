@@ -1,0 +1,39 @@
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.function.Function;
+
+import static combinatorpattern.ClownRegistrationValidator.*;
+import static combinatorpattern.ClownRegistrationValidator.ValidationResult.SUCCES;
+
+public interface ClownRegistrationValidator extends Function<Clowns, ValidationResult> {
+
+    static ClownRegistrationValidator isEmailValid() {
+        return clown -> clown.getEmail().contains("@") ?
+                SUCCES : ValidationResult.EMAIL_NOT_VALID;
+    }
+
+    static ClownRegistrationValidator isPhoneNumber() {
+        return clown -> clown.getPhoneNumber().contains("+7") ?
+                SUCCES : ValidationResult.PHONE_NUMBER_NOT_VALID;
+    }
+
+    static ClownRegistrationValidator isADult() {
+        return clown -> Period.between(clown.getDob(), LocalDate.now()).getYears() > 16 ?
+                SUCCES : ValidationResult.IS_NOT_ADULT;
+    }
+
+    default ClownRegistrationValidator and (ClownRegistrationValidator other) {
+        return clown -> {
+            ValidationResult result = this.apply(clown);
+            return result.equals(SUCCES) ? other.apply(clown) : result;
+        };
+    }
+
+    enum ValidationResult {
+        SUCCES,
+        PHONE_NUMBER_NOT_VALID,
+        EMAIL_NOT_VALID,
+        IS_NOT_ADULT
+    }
+}

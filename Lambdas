@@ -1,0 +1,27 @@
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
+public class Lambdas { //lambda and primities
+    public static void main(String[] args) {
+  
+        System.out.println(upperCaseName.apply("Blue Clown"));
+        System.out.println(uppperCaseName.apply("Red Clown", null));
+        
+        BiFunction<String,Integer, String> uppperCaseName = (name, age) -> {
+            //logic
+            if(name.isBlank()) throw new IllegalArgumentException(heh"");
+            System.out.println(age);
+            return name.toUpperCase();
+        }; 
+        
+    }
+
+        static Function<String, String> upperCaseName = name -> {
+        if (name.isEmpty())
+            throw new IllegalArgumentException("wtf");
+
+//        if(name.isBlank()) throw new IllegalArgumentException("asd");
+        return name.toUpperCase();
+    };
+    
+}

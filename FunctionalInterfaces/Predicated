@@ -1,0 +1,40 @@
+
+import java.util.function.Predicate;
+//predicate
+public class Test4 {
+    public static void main(String[] args) {
+
+        //WithOut Predicate
+        String a = "+70020102011";
+
+        if(isPhoneNumbervalid(a)) {
+            System.out.println(a + " ~ " + isPhoneNumbervalid(a));
+        }
+        else {
+            System.out.println("Wrong number");
+        }
+
+
+        //With Predicate
+        String c = "+70020102031";
+        String v = "80020102031";
+        String b = "+72135";
+        System.out.println(c + "   " + isPhoneNumbervalidPredicate.test(c));
+        System.out.println(v + "   " + isPhoneNumbervalidPredicate.test(v));
+        System.out.println(b + "   " + isPhoneNumbervalidPredicate.test(b));
+
+        System.out.println(isPhoneNumbervalidPredicate.and(containsNumber3).test(c));
+        System.out.println(isPhoneNumbervalidPredicate.and(containsNumber3).test(v));
+        System.out.println(isPhoneNumbervalidPredicate.and(containsNumber3).test(b));
+    }
+
+    static boolean isPhoneNumbervalid(String phoneNumber) {
+        return phoneNumber.startsWith("+7") && phoneNumber.length() == 12;
+    }
+
+    static Predicate<String> isPhoneNumbervalidPredicate = phoneNumber ->
+            phoneNumber.startsWith("+7") && phoneNumber.length() == 12;
+
+    static Predicate<String> containsNumber3 = phoneNumber ->
+            phoneNumber.contains("3");
+}

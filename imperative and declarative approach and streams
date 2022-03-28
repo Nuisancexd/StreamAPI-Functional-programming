@@ -1,0 +1,88 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+
+import static Functional.Test1.Colors.*;
+
+public class Test1 {
+    public static void main(String[] args) {
+
+        List<Clowns> clowns = List.of(
+                new Clowns("Funny", RED),
+                new Clowns("Sad", BLUE),
+                new Clowns("Happy", PINK),
+                new Clowns("Terrible", BLUE),
+                new Clowns("Love", PURPLE)
+        );
+
+        //Imperative approach
+        List<Clowns> colors = new ArrayList<>();
+
+        for(Clowns clown: clowns) {
+            if(BLUE.equals(clown.colors)) {
+                colors.add(clown);
+            }
+        }
+
+        for(Clowns color: colors) {
+            System.out.println(color);
+        }
+
+        System.out.println("\n");
+
+
+        //Declarative approach
+
+        clowns.stream()
+                .filter(clown -> BLUE.equals(clown.colors))
+                .forEach(System.out::println);
+
+        List<Clowns> clownme = clowns.stream()
+                .filter(clown -> PINK.equals(clown.colors) || PURPLE.equals(clown.colors))
+                .collect(Collectors.toList());
+        clownme.forEach(System.out::println);
+
+
+
+        clowns.stream()
+                .map(clown -> clown.name.toUpperCase(Locale.ROOT))
+                .collect(Collectors.toSet())
+                .forEach(System.out::println);
+
+        clowns.stream()
+                .map(clown -> clown.name)
+                .mapToInt(String::length)
+                .forEach(System.out::println);
+
+        boolean b = clowns.stream()
+                .allMatch(clown -> BLUE.equals(clown.colors));
+        System.out.println(b);
+
+
+        boolean b1 = clowns.stream()
+                .anyMatch(clown -> BLUE.equals(clown.colors));
+        System.out.println(b1);
+
+    }
+
+    static class Clowns {
+
+        private final String name;
+        private final Colors colors;
+
+        Clowns(String name, Colors colors) {
+            this.name = name;
+            this.colors = colors;
+        }
+
+        @Override
+        public String toString(){
+            return "color: " + colors + ", " + "name: " + name;
+        }
+    }
+
+    enum Colors {
+        RED, BLUE, PURPLE, PINK
+    }
+}

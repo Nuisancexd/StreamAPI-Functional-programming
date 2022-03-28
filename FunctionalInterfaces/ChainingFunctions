@@ -1,0 +1,65 @@
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
+public class Test2 {
+    public static void main(String[] args) {
+
+        System.out.println("\n" + "Increment By one");
+        System.out.println(increment(1));
+//        int increment = increment(1);
+//        System.out.println(increment);
+
+        System.out.println("\n" + "increment and then multiply");
+        int multiply = multiply(increment(1));
+        System.out.println(multiply);
+
+        System.out.println("\n" + "increment and then multiply");
+        int inc = multiply(increment(5));
+        System.out.println(inc);
+
+        System.out.println("\n" + "increment first arg then multiply second arg");
+        int incandmult = incByOneAndMultiply(5,10);
+        System.out.println(incandmult);
+
+        System.out.println("\n" + "~~java.util.Function.txt~~" + "\n");
+
+        //Function.txt takes 1 arg and produces 1 results
+
+        System.out.println("\n" + "increment by one");
+        int increment = incrementByFunction.apply(1);
+        System.out.println(increment);
+
+        System.out.println("\n" + "increment by one then multiply");
+        int multiplyByFunction1 = multiplyByFunction.apply(increment);
+        System.out.println(multiplyByFunction1);
+
+        System.out.println("\n" + "increment and then multiply");
+        Function<Integer, Integer> addBy1ThenMultiply10 = incrementByFunction.andThen(multiplyByFunction);
+        System.out.println(addBy1ThenMultiply10.apply(5));
+
+        //BiFunction takes 2 arg and produces 1 result
+
+        System.out.println("\n" + "increment first arg and then multiply second arg");
+        System.out.println(incByOneAndMultiply(5, 10));
+
+    }
+
+    static Function<Integer, Integer> incrementByFunction = number -> (number + 5) / 2;
+
+    static Function<Integer, Integer> multiplyByFunction = number -> number * 10;
+
+    static int increment(int number) {
+        return (number + 5) / 2;
+    }
+
+    static int multiply(int number) {
+        return number * 10;
+    }
+
+    static BiFunction<Integer, Integer, Integer> incAndMultiplyFunction =
+        (numberToIncrementByOne, numberToMultiply) -> (numberToIncrementByOne + 1) * numberToMultiply;
+
+    static int incByOneAndMultiply(int number, int numToMultiply) {
+        return (number + 1) * numToMultiply;
+    }
+}

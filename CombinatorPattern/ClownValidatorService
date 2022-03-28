@@ -1,0 +1,22 @@
+import java.time.LocalDate;
+import java.time.Period;
+
+public class ClownsValidatorService {
+
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
+    }
+
+    private boolean isAdultValid(LocalDate dob) {
+        return Period.between(dob, LocalDate.now()).getYears() > 16;
+    }
+    private boolean isPhoneNumberValid(String phoneNumber) {
+        return phoneNumber.contains("+7");
+    }
+
+    public boolean isValid(Clowns clowns) {
+        return isEmailValid(clowns.getEmail()) &&
+                isPhoneNumberValid(clowns.getPhoneNumber()) &&
+                isAdultValid(clowns.getDob());
+    }
+}

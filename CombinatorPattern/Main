@@ -1,0 +1,32 @@
+import java.time.LocalDate;
+
+import static combinatorpattern.ClownRegistrationValidator.*;
+import static combinatorpattern.ClownRegistrationValidator.ValidationResult.SUCCES;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Clowns clown = new Clowns(
+                "Shizofrenia", "Shiz.me@mail.ru",
+                "+79959459114", LocalDate.of(2003,7,26)
+
+        );
+
+
+        //System.out.println(new ClownsValidatorService().isValid(clown));
+
+        ValidationResult result = isEmailValid()
+                .and(isPhoneNumber())
+                .and(isADult())
+                .and(isEmailValid())
+                .apply(clown);
+
+
+
+        System.out.println(result);
+
+        if(result != SUCCES) {
+            throw new IllegalStateException(result.name());
+        }
+    }
+}

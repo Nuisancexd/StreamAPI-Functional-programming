@@ -1,0 +1,39 @@
+import java.util.function.BiConsumer;
+
+public class Test3 {
+    public static void main(String[] args) {
+
+        // Normal java function
+        User user = new User("User", "1111");
+        UserReg(user);
+
+        // Functional interface
+        User user1 = new User("UUser", "2222");
+        Consumer.accept(user1);
+        biConsumer.accept(user1, false);
+
+    }
+
+    static BiConsumer<User, Boolean> biConsumer = (user, showPhoneNumber) ->
+            System.out.println("customer: " + user.name + " registered phone: " + (showPhoneNumber ? user.phone : "*****"));
+
+
+    static java.util.function.Consumer<User> Consumer = user ->
+            System.out.println("Name: " + user.name + " registered with phone: " + user.phone);
+
+
+    static void UserReg(User user) {
+        System.out.println("Name: " + user.name + " registered with phone: " + user.phone);
+    }
+
+    static class User {
+
+        private final String name;
+        private final String phone;
+
+        User(String name, String phone) {
+            this.name = name;
+            this.phone = phone;
+        }
+    }
+}
